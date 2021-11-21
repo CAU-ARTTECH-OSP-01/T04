@@ -5,7 +5,7 @@ from pygame.locals import *
 ### 프로그램 기본 세팅 ###
 pygame.init()
 pygame.display.set_caption("통학러 푸앙이")
-screen = pygame.display.set_mode((675, 1080))
+screen = pygame.display.set_mode((405, 650))   # 스크린 사이즈 405*650 (대략 10:16 비율)
 clock = pygame.time.Clock()
 
 ### 이미지, 사운드 파일, 폰트 세팅 ###
@@ -34,4 +34,4 @@ while 1:
 
 
 
-    pygame.display.update()
+    pygame.display.update()             # 스크린 업데이트(게임 루프 제일 하단에 *반드시* 위치해야 함)
