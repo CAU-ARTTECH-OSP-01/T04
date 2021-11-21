@@ -1,14 +1,5 @@
 # T04
-## 100 커밋 찍읍시다!
-
-![storyboard01](./storyboard/01.png)
-![storyboard02](./storyboard/02.png)
-![storyboard03](./storyboard/03.png)
-![storyboard04](./storyboard/04.png)
-![storyboard05](./storyboard/05.png)
-![storyboard06](./storyboard/06.png)
-
-
+100 커밋 찍읍시다!
 
 ## 기능 목록
 - 화면모드 전환
@@ -30,3 +21,11 @@
     - 장애물 랜덤 생성
     - 장애물 생성 속도, 생성 위치 적절하게 조절해줄 필요 있음
     - 각 라운드 올라갈 때마다 장애물 내려오는 속도가 조금씩 빨라져야 함
+
+
+![storyboard01](./storyboard/01.png)
+![storyboard02](./storyboard/02.png)
+![storyboard03](./storyboard/03.png)
+![storyboard04](./storyboard/04.png)
+![storyboard05](./storyboard/05.png)
+![storyboard06](./storyboard/06.png)
