@@ -46,7 +46,7 @@ while 1:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             sys.exit()                  # QUIT 버튼 클릭 여부 감지
-    if time.time() - last_ginkgo_spawn_time > 0.5:       # 은행열매 장애물 생성 속도 조절(1초마다 생성)
+    if time.time() - last_ginkgo_spawn_time > 0.5:       # 은행열매 장애물 생성 속도 조절(0.5초마다 생성)
         ginkgos.append(Ginkgo())
         last_ginkgo_spawn_time = time.time()
 
