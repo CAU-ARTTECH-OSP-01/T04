@@ -20,7 +20,6 @@ clock = pygame.time.Clock()
 ### 인스턴스 세팅 : 인스턴스 생성 ###
 
 
-
 ### 게임 메인 루프 ###
 while 1:
     clock.tick(60)                      # 스크린 프레임 레이트 설정 (60fps)
