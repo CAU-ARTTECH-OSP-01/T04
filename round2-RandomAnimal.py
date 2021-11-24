@@ -18,6 +18,8 @@ animal_image.set_colorkey((0, 0, 0))
 
 
 ### 클래스 세팅 : 클래스 생성 ###
+
+#동물 클래스
 class Animal:
     def __init__(self):
         self.x = random.randint(0,570)
@@ -31,6 +33,7 @@ class Animal:
 
 animal = Animal()
 
+#푸앙이 클래스
 class puang:
     def __init__(self):
         self.x = 320
@@ -84,12 +87,12 @@ while 1:
     screen.blit(font.render("Score: "+str(score),True,(255,255,255)),(5,5))
 
     for animal in animals:
-        if puang.hit_by(animal):
+        if puang.hit_by(animal):    #게임오버
             screen.blit(GAME_OVER,(170,200))
             while 1:
                 for event in pygame.event.get():
                     if event.type == pygame.QUIT:
-                        sys.exit() 
+                        sys.exit()
                 pygame.display.update()
 
 
