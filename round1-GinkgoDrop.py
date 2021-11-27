@@ -9,6 +9,11 @@ screen = pygame.display.set_mode((405, 650))   # 스크린 사이즈 405*650 (�
 clock = pygame.time.Clock()
 
 ### 이미지, 사운드 파일, 폰트 세팅 ###
+puang_image = pygame.image.load("images/puang.png")
+puang_image = pygame.transform.scale(puang_image, (95, 105))    # 푸앙이 이미지 사이즈 조절
+ginkgo_image = pygame.image.load("images/ginkgo.png")               # 주의사항) png파일에 convert() 사용시 원치않는 이미지 배경이 생김
+ginkgo_image = pygame.transform.scale(ginkgo_image, (50, 50))       # 은행열매 이미지 사이즈 조절
+
 
 
 ### 변수 세팅 : 변수 선언 ###
@@ -27,17 +32,29 @@ class Ginkgo:                               # 은행열매 장애물
         self.dy += 0.1
         self.y += self.dy
     def draw(self):
-        pygame.draw.circle(screen, (237, 210, 0), (self.x, self.y), self.radius)    # 일단 은행열매 이미지 대신 도형으로 대체
+        screen.blit(ginkgo_image, (self.x, self.y))
     def bounce(self):           # 벽에 부딪혔을 때 튕겨나오도록 하는 부분
         if self.x < 0 or self.x > 405:
             self.dx *= -1
     def off_screen(self):       # 화면에서 사라진 인스턴스 삭제
         return self.y > 650
 
+class Puang:
+    def __init__(self):
+        self.x = 155    # 푸앙이 초기 위치가 화면 중앙이 되도록 설정
+    def move(self):
+        if pressed_keys[K_LEFT] and self.x > 0:
+            self.x -= 5
+        if pressed_keys[K_RIGHT] and self.x < 310:  # 푸앙이 이미지 크기에 따라 푸앙이 x 한계 좌표 조절 *
+            self.x += 5
+    def draw(self):
+        screen.blit(puang_image, (self.x, 540))     # 푸앙이 이미지 크기에 따라 푸앙이 y좌표 조절 *
+
 
 
 ### 인스턴스 세팅 : 인스턴스 생성 ###
 ginkgos = []
+puang = Puang()
 
 
 ### 게임 메인 루프 ###
@@ -46,11 +63,15 @@ while 1:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             sys.exit()                  # QUIT 버튼 클릭 여부 감지
+    pressed_keys = pygame.key.get_pressed()
+
     if time.time() - last_ginkgo_spawn_time > 0.5:       # 은행열매 장애물 생성 속도 조절(0.5초마다 생성)
         ginkgos.append(Ginkgo())
         last_ginkgo_spawn_time = time.time()
 
     screen.fill((255, 255, 255))
+    puang.move()
+    puang.draw()
     
     i = 0
     while i < len(ginkgos):
