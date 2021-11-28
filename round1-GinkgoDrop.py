@@ -18,6 +18,8 @@ Round1_background = pygame.transform.scale(Round1_background, (405, 650))
 Round1_OVER = pygame.image.load("images/rough_images/round1_end.png")
 Round1_OVER = pygame.transform.scale(Round1_OVER, (405, 650))
 
+font = pygame.font.Font(None, 50)
+
 
 
 ### 변수 세팅 : 변수 선언 ###
@@ -101,6 +103,6 @@ while 1:
                 pygame.display.update()
 
 
-
-
+    pygame.draw.rect(screen, (234,234,234), [300, 0, 100, 60])
+    screen.blit(font.render(str(int((pygame.time.get_ticks())/1000)), True, (0, 0, 0)), (325, 15))
     pygame.display.update()             # 스크린 업데이트(게임 루프 제일 하단에 *반드시* 위치해야 함)
