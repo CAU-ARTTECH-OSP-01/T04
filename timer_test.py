@@ -1,13 +1,11 @@
-import pygame, sys, time
+import pygame, sys
 from pygame.locals import *
 pygame.init()
-clock = pygame.time.Clock()
 screen = pygame.display.set_mode((100,100))
 
 font = pygame.font.Font(None, 50)
 
 while 1:
-    clock.tick(60)
     for event in pygame.event.get():       
         if event.type == QUIT:              
             sys.exit()
