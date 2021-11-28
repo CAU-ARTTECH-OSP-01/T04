@@ -13,6 +13,10 @@ puang_image = pygame.image.load("images/puang.png")
 puang_image = pygame.transform.scale(puang_image, (95, 105))    # 푸앙이 이미지 사이즈 조절
 ginkgo_image = pygame.image.load("images/ginkgo.png")               # 주의사항) png파일에 convert() 사용시 원치않는 이미지 배경이 생김
 ginkgo_image = pygame.transform.scale(ginkgo_image, (50, 50))       # 은행열매 이미지 사이즈 조절
+Round1_background = pygame.image.load("images/rough_images/round1_background.png")
+Round1_background = pygame.transform.scale(Round1_background, (405, 650))
+Round1_OVER = pygame.image.load("images/rough_images/round1_end.png")
+Round1_OVER = pygame.transform.scale(Round1_OVER, (405, 650))
 
 
 
@@ -42,6 +46,7 @@ class Ginkgo:                               # 은행열매 장애물
 class Puang:
     def __init__(self):
         self.x = 155    # 푸앙이 초기 위치가 화면 중앙이 되도록 설정
+        self.y = 540
     def move(self):
         if pressed_keys[K_LEFT] and self.x > 0:
             self.x -= 5
@@ -49,6 +54,8 @@ class Puang:
             self.x += 5
     def draw(self):
         screen.blit(puang_image, (self.x, 540))     # 푸앙이 이미지 크기에 따라 푸앙이 y좌표 조절 *
+    def hit_by(self, ginkgo):
+        return pygame.Rect((self.x, self.y),(95, 105)).collidepoint(ginkgo.x, ginkgo.y)
 
 
 
@@ -70,6 +77,7 @@ while 1:
         last_ginkgo_spawn_time = time.time()
 
     screen.fill((255, 255, 255))
+    screen.blit(Round1_background, (0,0))
     puang.move()
     puang.draw()
     
@@ -82,10 +90,15 @@ while 1:
             del ginkgos[i]
             i -= 1
         i += 1
-                  
- 
 
-
+    for ginkgo in ginkgos:
+        if puang.hit_by(ginkgo):
+            screen.blit(Round1_OVER, (0,0))
+            while 1:
+                for event in pygame.event.get():
+                    if event.type == QUIT:
+                        sys.exit()
+                pygame.display.update()
 
 
 
