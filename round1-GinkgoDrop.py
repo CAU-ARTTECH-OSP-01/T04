@@ -9,12 +9,26 @@ screen = pygame.display.set_mode((405, 650))   # 스크린 사이즈 405*650 (�
 clock = pygame.time.Clock()
 
 ### 이미지, 사운드 파일, 폰트 세팅 ###
-main_image = pygame.image.load("images/rough_images/main.png")
-main_image = pygame.transform.scale(main_image, (405, 650))
 puang_image = pygame.image.load("images/puang.png")
 puang_image = pygame.transform.scale(puang_image, (95, 105))    # 푸앙이 이미지 사이즈 조절
 ginkgo_image = pygame.image.load("images/ginkgo.png")               # 주의사항) png파일에 convert() 사용시 원치않는 이미지 배경이 생김
 ginkgo_image = pygame.transform.scale(ginkgo_image, (50, 50))       # 은행열매 이미지 사이즈 조절
+main = pygame.image.load("images/rough_images/main.png")
+main = pygame.transform.scale(main, (405, 650))
+intro01 = pygame.image.load("images/rough_images/intro01.png")
+intro01 = pygame.transform.scale(intro01, (405, 650))
+intro02 = pygame.image.load("images/rough_images/intro02.png")
+intro02 = pygame.transform.scale(intro02, (405, 650))
+intro03 = pygame.image.load("images/rough_images/intro03.png")
+intro03 = pygame.transform.scale(intro03, (405, 650))
+intro04 = pygame.image.load("images/rough_images/intro04.png")
+intro04 = pygame.transform.scale(intro04, (405, 650))
+intro05 = pygame.image.load("images/rough_images/intro05.png")
+intro05 = pygame.transform.scale(intro05, (405, 650))
+intro06 = pygame.image.load("images/rough_images/intro06.png")
+intro06 = pygame.transform.scale(intro06, (405, 650))
+game_start = pygame.image.load("images/rough_images/game_start.png")
+game_start = pygame.transform.scale(game_start, (405, 650))
 Round1_start = pygame.image.load("images/rough_images/round1_start.png")
 Round1_start = pygame.transform.scale(Round1_start, (405, 650))
 Round1_background = pygame.image.load("images/rough_images/round1_background.png")
@@ -82,7 +96,7 @@ while 1:
     pressed_keys = pygame.key.get_pressed()
     
     if menu == "main":
-        screen.blit(main_image, (0,0))
+        screen.blit(main, (0,0))
         txt = font.render("Start Game", True, (255,255,255))
         txt_x = 120
         txt_y = 526
@@ -91,12 +105,56 @@ while 1:
         screen.blit(txt, (txt_x, txt_y))
     if pygame.mouse.get_pressed()[0] and buttonrect.collidepoint(pygame.mouse.get_pos()):
         time_last = pygame.time.get_ticks()
+        menu = "intro01"
+    if menu == "intro01":
+        time_now = pygame.time.get_ticks()
+        screen.blit(intro01,(0,0))
+    if time_now - time_last > 500:
+        time_last = pygame.time.get_ticks()
+        menu = "intro02"
+    if menu == "intro02":
+        time_now = pygame.time.get_ticks()
+        screen.blit(intro02,(0,0))
+    if time_now - time_last > 500:
+        time_last = pygame.time.get_ticks()
+        menu = "intro03"
+    if menu == "intro03":
+        time_now = pygame.time.get_ticks()
+        screen.blit(intro03,(0,0))
+    if time_now - time_last > 500:
+        time_last = pygame.time.get_ticks()
+        menu = "intro04"  
+    if menu == "intro04":
+        time_now = pygame.time.get_ticks()
+        screen.blit(intro04,(0,0))
+    if time_now - time_last > 500:
+        time_last = pygame.time.get_ticks()
+        menu = "intro05"
+    if menu == "intro05":
+        time_now = pygame.time.get_ticks()
+        screen.blit(intro05,(0,0))
+    if time_now - time_last > 500:
+        time_last = pygame.time.get_ticks()
+        menu = "intro06"
+    if menu == "intro06":
+        time_now = pygame.time.get_ticks()
+        screen.blit(intro06,(0,0))
+    if time_now - time_last > 500:
+        time_last = pygame.time.get_ticks()
+        menu = "game_start"
+    if menu == "game_start":
+        time_now = pygame.time.get_ticks()
+        screen.blit(game_start,(0,0))
+    if time_now - time_last > 500:
+        time_last = pygame.time.get_ticks()
         menu = "round1_start"
+     
         
     if menu == "round1_start":
         time_now = pygame.time.get_ticks()
         screen.blit(Round1_start,(0,0))
     if time_now - time_last > 500:
+        time_last = pygame.time.get_ticks()
         menu = "round1_game"
 
     if menu == "round1_game":
