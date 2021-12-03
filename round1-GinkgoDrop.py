@@ -5,7 +5,7 @@ from pygame.locals import *
 ### 프로그램 기본 세팅 ###
 pygame.init()
 pygame.display.set_caption("통학러 푸앙이")
-screen = pygame.display.set_mode((405, 650))   # 스크린 사이즈 405*650 (대략 10:16 비율)
+screen = pygame.display.set_mode((405,650))
 clock = pygame.time.Clock()
 
 ### 이미지, 사운드 파일, 폰트 세팅 ###
@@ -47,23 +47,25 @@ menu = "main"
 last_ginkgo_spawn_time = 0
 
 ### 클래스 세팅 : 클래스 생성 ###
-class Ginkgo:                               # 은행열매 장애물
+class Ginkgo:                                       # 은행 열매 클래스 
     def __init__(self):
-        self.radius = 10
-        self.x = random.randint(0+self.radius, 405-self.radius)     
+        self.x = random.randint(20,630)             # 은행열매 픽셀 20
         self.y = -60
-        self.dy = random.randint(1, 2)              # x 방향 가속 설정
-        self.dx = random.choice((-1, 1))*self.dy    # y 방향 가속 설정
-    def move(self):
-        self.y += self.dx 
+        self.dy = random.randint(1,2)               # y 방향 가속 설정
+        self.dx = random.choice((-1,1))*self.dy     # x 방향 가속 설정
+
+    def move (self):
+        self.y += self.dx
         self.dy += 0.1
         self.y += self.dy
+
     def draw(self):
         screen.blit(ginkgo_image, (self.x, self.y))
     def bounce(self):           # 벽에 부딪혔을 때 튕겨나오도록 하는 부분
         if self.x < 0 or self.x > 405:
             self.dx *= -1
-    def off_screen(self):       # 화면에서 사라진 인스턴스 삭제
+
+    def off_screen(self):       # 화면에서 사라진 인스턴스 삭제 
         return self.y > 650
 
 class Puang:
@@ -86,10 +88,9 @@ class Puang:
 ginkgos = []
 puang = Puang()
 
-
 ### 게임 메인 루프 ###
 while 1:
-    clock.tick(60)                      # 스크린 프레임 레이트 설정 (60fps)
+    clock.tick(60)                      # 스크린 프레임 레이트 설정 (60fps)           
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             sys.exit()                  # QUIT 버튼 클릭 여부 감지
