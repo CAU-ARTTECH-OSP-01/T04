@@ -196,6 +196,10 @@ while 1:
                     for event in pygame.event.get():
                         if event.type == QUIT:
                             sys.exit()
+                    if pygame.mouse.get_pressed()[0] and buttonrect.collidepoint(pygame.mouse.get_pos()):
+                        menu = "round1_start"
+                        break
+
                     pygame.display.update()
 
         pygame.draw.rect(screen, (234,234,234), [300, 0, 100, 60])
