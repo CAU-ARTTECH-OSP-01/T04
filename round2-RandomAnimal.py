@@ -14,10 +14,14 @@ GAME_OVER = pygame.load("images/gameover.png").convert() #게임오버 이미지
 animal_image = pygame.image.load("images/animal.png").convert() #동물 이미지
 animal_image.set_colorkey((0, 0, 0))
 
+#동물 종류에 따라 이미지 수정계획
+
 ### 변수 세팅 : 변수 선언 ###
 
 
 ### 클래스 세팅 : 클래스 생성 ###
+
+#다른 동물 클래스 추가예정
 
 #동물 클래스
 class Animal:
