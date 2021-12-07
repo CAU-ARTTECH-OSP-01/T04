@@ -104,59 +104,59 @@ while 1:
         buttonrect = pygame.Rect((txt_x, txt_y), txt.get_size())
         pygame.draw.rect(screen, (255,0,0), buttonrect)
         screen.blit(txt, (txt_x, txt_y))
-    if pygame.mouse.get_pressed()[0] and buttonrect.collidepoint(pygame.mouse.get_pos()):
-        time_last = pygame.time.get_ticks()
-        menu = "intro01"
+        if pygame.mouse.get_pressed()[0] and buttonrect.collidepoint(pygame.mouse.get_pos()):
+            time_last = pygame.time.get_ticks()
+            menu = "intro01"
     if menu == "intro01":
         time_now = pygame.time.get_ticks()
         screen.blit(intro01,(0,0))
-    if time_now - time_last > 500:
-        time_last = pygame.time.get_ticks()
-        menu = "intro02"
+        if time_now - time_last > 5000:
+            time_last = pygame.time.get_ticks()
+            menu = "intro02"
     if menu == "intro02":
         time_now = pygame.time.get_ticks()
         screen.blit(intro02,(0,0))
-    if time_now - time_last > 500:
-        time_last = pygame.time.get_ticks()
-        menu = "intro03"
+        if time_now - time_last > 5000:
+            time_last = pygame.time.get_ticks()
+            menu = "intro03"
     if menu == "intro03":
         time_now = pygame.time.get_ticks()
         screen.blit(intro03,(0,0))
-    if time_now - time_last > 500:
-        time_last = pygame.time.get_ticks()
-        menu = "intro04"  
+        if time_now - time_last > 5000:
+            time_last = pygame.time.get_ticks()
+            menu = "intro04"  
     if menu == "intro04":
         time_now = pygame.time.get_ticks()
         screen.blit(intro04,(0,0))
-    if time_now - time_last > 500:
-        time_last = pygame.time.get_ticks()
-        menu = "intro05"
+        if time_now - time_last > 5000:
+            time_last = pygame.time.get_ticks()
+            menu = "intro05"
     if menu == "intro05":
         time_now = pygame.time.get_ticks()
         screen.blit(intro05,(0,0))
-    if time_now - time_last > 500:
-        time_last = pygame.time.get_ticks()
-        menu = "intro06"
+        if time_now - time_last > 5000:
+            time_last = pygame.time.get_ticks()
+            menu = "intro06"
     if menu == "intro06":
         time_now = pygame.time.get_ticks()
         screen.blit(intro06,(0,0))
-    if time_now - time_last > 500:
-        time_last = pygame.time.get_ticks()
-        menu = "game_start"
+        if time_now - time_last > 5000:
+            time_last = pygame.time.get_ticks()
+            menu = "game_start"
     if menu == "game_start":
         time_now = pygame.time.get_ticks()
         screen.blit(game_start,(0,0))
-    if time_now - time_last > 500:
-        time_last = pygame.time.get_ticks()
-        menu = "round1_start"
-     
+        if time_now - time_last > 500:
+            time_last = pygame.time.get_ticks()
+            menu = "round1_start"
+        
         
     if menu == "round1_start":
         time_now = pygame.time.get_ticks()
         screen.blit(Round1_start,(0,0))
-    if time_now - time_last > 500:
-        time_last = pygame.time.get_ticks()
-        menu = "round1_game"
+        if time_now - time_last > 500:
+            time_last = pygame.time.get_ticks()
+            menu = "round1_game"
 
     if menu == "round1_game":
         if time.time() - last_ginkgo_spawn_time > 0.5:       # 은행열매 장애물 생성 속도 조절(0.5초마다 생성)
@@ -185,8 +185,8 @@ while 1:
                 txt = font.render("Back to the Game", True, (255,255,255))
                 txt_x = 55
                 txt_y = 528
-                buttonrect = pygame.Rect((txt_x, txt_y), txt.get_size())
-                pygame.draw.rect(screen, (255,0,0), buttonrect)
+                buttonrect_end= pygame.Rect((txt_x, txt_y), txt.get_size())
+                pygame.draw.rect(screen, (255,0,0), buttonrect_end)
                 screen.blit(txt, (txt_x, txt_y))
             # 아무 조작이 없어도 게임이 재시작됨.
             #if pygame.mouse.get_pressed()[0] and buttonrect.collidepoint(pygame.mouse.get_pos()):
@@ -196,8 +196,13 @@ while 1:
                     for event in pygame.event.get():
                         if event.type == QUIT:
                             sys.exit()
-                    if pygame.mouse.get_pressed()[0] and buttonrect.collidepoint(pygame.mouse.get_pos()):
+                    if pygame.mouse.get_pressed()[0] and buttonrect_end.collidepoint(pygame.mouse.get_pos()):
                         menu = "round1_start"
+                        time_last = 0
+                        time_now = 0
+                        last_ginkgo_spawn_time = 0
+                        puang = Puang() 
+                        ginkgos.clear()
                         break
 
                     pygame.display.update()
