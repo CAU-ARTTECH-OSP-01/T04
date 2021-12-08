@@ -14,42 +14,52 @@ GAME_OVER = pygame.load("images/gameover.png").convert() #게임오버 이미지
 animal_image = pygame.image.load("images/animal.png").convert() #동물 이미지
 animal_image.set_colorkey((0, 0, 0))
 
-#동물 종류에 따라 이미지 수정계획
+#여러가지 동물 이미지 추가 예정
 
 ### 변수 세팅 : 변수 선언 ###
 
 
 ### 클래스 세팅 : 클래스 생성 ###
 
-#다른 동물 클래스 추가예정
+#여러가지 동물 클래스 추가 예정
 
-#동물 클래스
 class Animal:
     def __init__(self):
-        self.x = random.randint(0,570)
-        self.y = -100
+        self.x = random.randint(20,570)  #동물 픽셀 20
+        self.y = -60
+        self.dy = random.randint(1,2)   # y방향 가속 설정
+        self.dx = random.choice((-1,1))*self.dy # x방향 가속 설정
+
+    def move(self):
+        self.y += self.dx
+        self.dy += 0.1
+        self.y += self.dy
         
     def draw(self):
         screen.blit(animal_image,(self.x,self.y))
 
+    def bounce(self):
+        if delf.x < 0 or self.x > 405:
+            self.dx *= -1
+
     def off_screen(self):
-        return self.y > 640
+        return self.y > 650
 
 animal = Animal()
 
-#푸앙이 클래스
 class puang:
     def __init__(self):
-        self.x = 320
+        self.x = 155
+        self.y = 540
         
     def move(self):
         if pressed_keys[K_LEFT] and self.x > 0:
-            self.x -= 3
-        if pressed_keys[K_RIGHT] and self.x < 540:
-            self.x += 3
+            self.x -= 5
+        if pressed_keys[K_RIGHT] and self.x < 310:
+            self.x += 5
             
     def draw(self):
-        screen.blit(puang_image,(self.x,591))
+        screen.blit(puang_image,(self.x, 540))
 
     def hit_by(self,animal):
         return (
@@ -70,6 +80,7 @@ while 1:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             sys.exit()                  # QUIT 버튼 클릭 여부 감지
+    pressed_keys = pygame.key.get_pressed()
 
     if time.time() - last_animal_spawn_time > 0.5:
         animals.append(Animal())
@@ -91,15 +102,13 @@ while 1:
     screen.blit(font.render("Score: "+str(score),True,(255,255,255)),(5,5))
 
     for animal in animals:
-        if puang.hit_by(animal):    #게임오버
+        if puang.hit_by(animal):
             screen.blit(GAME_OVER,(170,200))
             while 1:
                 for event in pygame.event.get():
                     if event.type == pygame.QUIT:
-                        sys.exit()
+                        sys.exit() 
                 pygame.display.update()
 
 
     pygame.display.update()             # 스크린 업데이트(게임 루프 제일 하단에 *반드시* 위치해야 함)
-
-
