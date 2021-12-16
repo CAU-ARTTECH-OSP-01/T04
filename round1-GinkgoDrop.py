@@ -9,8 +9,8 @@ screen = pygame.display.set_mode((405,650))
 clock = pygame.time.Clock()
 
 ### 이미지, 사운드 파일, 폰트 세팅 ###
-puang_image = pygame.image.load("images/puang.png")
-puang_image = pygame.transform.scale(puang_image, (95, 105))    # 푸앙이 이미지 사이즈 조절
+puang_image = pygame.image.load("images/푸앙9090-2.png")
+#puang_image = pygame.transform.scale(puang_image, (95, 105))    # 푸앙이 이미지 사이즈 조절
 ginkgo_image = pygame.image.load("images/ginkgo.png")               # 주의사항) png파일에 convert() 사용시 원치않는 이미지 배경이 생김
 ginkgo_image = pygame.transform.scale(ginkgo_image, (50, 50))       # 은행열매 이미지 사이즈 조절
 main = pygame.image.load("images/rough_images/main.png")
@@ -110,37 +110,37 @@ while 1:
     if menu == "intro01":
         time_now = pygame.time.get_ticks()
         screen.blit(intro01,(0,0))
-        if time_now - time_last > 5000:
+        if time_now - time_last > 500:
             time_last = pygame.time.get_ticks()
             menu = "intro02"
     if menu == "intro02":
         time_now = pygame.time.get_ticks()
         screen.blit(intro02,(0,0))
-        if time_now - time_last > 5000:
+        if time_now - time_last > 500:
             time_last = pygame.time.get_ticks()
             menu = "intro03"
     if menu == "intro03":
         time_now = pygame.time.get_ticks()
         screen.blit(intro03,(0,0))
-        if time_now - time_last > 5000:
+        if time_now - time_last > 500:
             time_last = pygame.time.get_ticks()
             menu = "intro04"  
     if menu == "intro04":
         time_now = pygame.time.get_ticks()
         screen.blit(intro04,(0,0))
-        if time_now - time_last > 5000:
+        if time_now - time_last > 500:
             time_last = pygame.time.get_ticks()
             menu = "intro05"
     if menu == "intro05":
         time_now = pygame.time.get_ticks()
         screen.blit(intro05,(0,0))
-        if time_now - time_last > 5000:
+        if time_now - time_last > 500:
             time_last = pygame.time.get_ticks()
             menu = "intro06"
     if menu == "intro06":
         time_now = pygame.time.get_ticks()
         screen.blit(intro06,(0,0))
-        if time_now - time_last > 5000:
+        if time_now - time_last > 500:
             time_last = pygame.time.get_ticks()
             menu = "game_start"
     if menu == "game_start":
