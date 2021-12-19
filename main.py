@@ -71,7 +71,7 @@ class Puang: # ** 푸앙이 이미지 크기에 맞춰 초기위치, 한계좌�
 
 class Ginkgo:                                       # 은행 열매 클래스 
     def __init__(self):
-        self.x = random.randint(50,600)             # 은행열매 픽셀 20
+        self.x = random.randint(50,355)           
         self.y = -60
         self.dy = random.randint(1,2)               # y 방향 가속 설정
 
@@ -117,7 +117,7 @@ class Animal:
 class People:
     def __init__(self):
         self.num = random.randint(0,11)
-        self.x = random.randint(66,556)           
+        self.x = random.randint(66,339)           
         self.y = -60
         self.dy = random.randint(2,3)             
         self.dx = random.choice((-1,1))*self.dy
@@ -157,6 +157,7 @@ while 1:
     pressed_keys = pygame.key.get_pressed()
     
     if menu == "main":
+        screen.fill((255, 255, 255))
         screen.blit(main, (0,0))
         buttonrect = pygame.Rect(230, 540, 150, 44)
         pygame.draw.rect(screen, (0,0,0), buttonrect, 1)
@@ -356,6 +357,9 @@ while 1:
                     sys.exit()
             if pygame.mouse.get_pressed()[0] and buttonrect.collidepoint(pygame.mouse.get_pos()):
                 menu = "main"
+                time_last = pygame.time.get_ticks()
+                pygame.time.delay(500)
+                break
                 
             pygame.display.update()
 
