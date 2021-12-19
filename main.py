@@ -1,7 +1,6 @@
 ### 모듈 불러오기 ###
-import pygame, sys, random, time, image
+import pygame, sys, random, time
 from pygame.locals import *
-from image import *
 
 ### 프로그램 기본 세팅 ###
 pygame.init()
@@ -10,17 +9,34 @@ screen = pygame.display.set_mode((405,650))
 clock = pygame.time.Clock()
 
 ### 이미지, 사운드 파일, 폰트 세팅 ###
+puang_idle = pygame.image.load("images/puang.png")
+puang_walk = pygame.image.load("images/puang_side.png")
 puang_left = pygame.transform.flip(puang_walk, True, False)
 puang_right = puang_walk
+
+main = pygame.image.load("images/main(1).png")
+game_start = pygame.image.load("images/game_start.png")
+Round1_background = pygame.image.load("images/round1_background.png")
+Round2_background = pygame.image.load("images/round2_background.png")
+Round3_background = pygame.image.load("images/round3_background.png")
+Round1_start = pygame.image.load("images/round1_start.png")
+Round2_start = pygame.image.load("images/round2_start.png")
+Round3_start = pygame.image.load("images/round3_start.png")
+Round1_OVER = pygame.image.load("images/round1_end.png")
+Round2_OVER = pygame.image.load("images/round2_end.png")
+Round3_OVER = pygame.image.load("images/round3_end.png")
+ending = pygame.image.load("images/ending.png")
+
+
+
 ginkgo_image = pygame.image.load("images/obstacle/round01/ginkgo.png")
 animal_images = ['animal-1.png', 'animal-2.png', 'animal-3.png', 'animal-4.png', 'animal-5.png', \
                  'animal-6.png', 'animal-7.png', 'animal-8.png', 'animal-9.png', 'animal-10.png']
 people_images = ['people-1.png', 'people-2.png', 'people-3.png', 'people-4.png', 'people-5.png', \
                  'people-6.png', 'people-7.png', 'people-8.png', 'people-9.png', 'people-10.png', 'people-11.png', 'people-12.png']
 
-font = pygame.font.SysFont("PFStardust", 40, True) # pygame.font.SysFont(font name, size, bold = False, italic = False)
-#text = font.render("Game Start!", False, (0,0,0)) # render(Text, antialias, color, background = None)
-#screen.blit(text,(100,100))
+font = pygame.font.Font(None, 50)
+
 
 ### 변수 세팅 : 변수 선언 ###
 time_last = 0
@@ -30,6 +46,7 @@ last_spawn_time = 0
 start_time = time.time()
 DIR2 = "images/obstacle/round02/"
 DIR3 = "images/obstacle/round03/"
+
 
 ### 클래스 세팅 : 클래스 생성 ###
 class Puang: # ** 푸앙이 이미지 크기에 맞춰 초기위치, 한계좌표, 충돌인식값 조절 **
@@ -50,14 +67,13 @@ class Puang: # ** 푸앙이 이미지 크기에 맞춰 초기위치, 한계좌�
             screen.blit(puang_idle, (self.x, 540))
 
     def hit_by(self, obstacle):
-        return pygame.Rect((self.x, self.y),(95, 105)).collidepoint(obstacle.x, obstacle.y)
+        return pygame.Rect((self.x, self.y),(72, 90)).collidepoint(obstacle.x, obstacle.y)
 
 class Ginkgo:                                       # 은행 열매 클래스 
     def __init__(self):
-        self.x = random.randint(20,630)             # 은행열매 픽셀 20
+        self.x = random.randint(50,600)             # 은행열매 픽셀 20
         self.y = -60
         self.dy = random.randint(1,2)               # y 방향 가속 설정
-        
 
     def move (self):
         self.dy += 0.1
@@ -90,7 +106,7 @@ class Animal:
         screen.blit(animal_image, (self.x, self.y))
 
     def bounce(self):       
-        if self.x < 0 or self.x > 405:
+        if self.x < 0 or self.x > 355:
             self.dx *= -1
         if self.y == self.p:
             self.dx *= -1
@@ -101,9 +117,9 @@ class Animal:
 class People:
     def __init__(self):
         self.num = random.randint(0,11)
-        self.x = random.randint(20,630)             # 은행열매 픽셀 20
+        self.x = random.randint(66,556)           
         self.y = -60
-        self.dy = random.randint(2,3)*2              
+        self.dy = random.randint(2,3)             
         self.dx = random.choice((-1,1))*self.dy
         self.p = random.randint(250, 400)
 
@@ -111,13 +127,12 @@ class People:
         self.x += self.dx
         self.y += self.dy
 
-    def bounce(self):           # 벽에 부딪혔을 때 튕겨나오도록 하는 부분
-        if self.x < 0 or self.x > 405:
+    def bounce(self):           
+        if self.x < 0 or self.x > 339:
             self.dx *= -1
         if self.y == self.p:
             self.dx *= -1
                     
-
     def draw(self):
         people_image = pygame.image.load(DIR3 + people_images[self.num])
         screen.blit(people_image, (self.x, self.y))
@@ -126,12 +141,12 @@ class People:
         return self.y > 650
 
 
-
 ### 인스턴스 세팅 : 인스턴스 생성 ###
 puang = Puang()
 ginkgos = []
 animals = []
 peoples = []
+
 
 ### 게임 메인 루프 ###
 while 1:
@@ -150,9 +165,7 @@ while 1:
             menu = "game_start"
 
     if menu == "game_start":
-        screen.fill((0, 0, 0))
-        text = font.render("Game Start!", False, (255,255,255))
-        screen.blit(text,(50,100))
+        screen.blit(game_start, (0,0))
         
         time_now = pygame.time.get_ticks()
         if time_now - time_last > 500:
@@ -161,9 +174,7 @@ while 1:
         
         
     if menu == "round1_start":
-        screen.fill((0, 0, 0))
-        text = font.render("Round 1", False, (255,255,255))
-        screen.blit(text,(50,100))
+        screen.blit(Round1_start, (0,0))
         
         time_now = pygame.time.get_ticks()
         if time_now - time_last > 500:
@@ -172,7 +183,7 @@ while 1:
 
     if menu == "round1_game":
         time_now = pygame.time.get_ticks()
-        if time.time() - last_spawn_time > 0.5:       # 은행열매 장애물 생성 속도 조절(0.5초마다 생성)
+        if time.time() - last_spawn_time > 0.5:       # 1라운드 장애물 생성 속도 조절(0.5초마다 생성)
             ginkgos.append(Ginkgo())
             last_spawn_time = time.time()
 
@@ -193,20 +204,15 @@ while 1:
 
         for ginkgo in ginkgos:
             if puang.hit_by(ginkgo):
-                font = pygame.font.SysFont("PFStardust", 35, True)
                 screen.blit(Round1_OVER, (0,0))
-                txt = font.render("Back to the Game", True, (255,255,255))
-                txt_x = 10
-                txt_y = 528
-                buttonrect_end= pygame.Rect((txt_x, txt_y), txt.get_size())
-                pygame.draw.rect(screen, (0,0,0), buttonrect_end)
-                screen.blit(txt, (txt_x, txt_y))
+                buttonrect = pygame.Rect(71,565,263,57)
+                pygame.draw.rect(screen, (0,0,0), buttonrect, 1)
            
                 while 1:
                     for event in pygame.event.get():
                         if event.type == QUIT:
                             sys.exit()
-                    if pygame.mouse.get_pressed()[0] and buttonrect_end.collidepoint(pygame.mouse.get_pos()):
+                    if pygame.mouse.get_pressed()[0] and buttonrect.collidepoint(pygame.mouse.get_pos()):
                         menu = "round1_start"
                         time_last = 0
                         time_now = 0
@@ -216,19 +222,16 @@ while 1:
                         break
 
                     pygame.display.update()
-        
-        pygame.draw.rect(screen, (234,234,234), [300, 0, 100, 60])
-        screen.blit(font.render(str(int((pygame.time.get_ticks())/1000)), True, (0, 0, 0)), (325, 15))
     
     if time_now - time_last > 10000:
         time_last = pygame.time.get_ticks()
+        last_spawn_time = 0
+        puang = Puang() 
+        ginkgos.clear()
         menu = "round2_start"
 
     if menu == "round2_start":
-        screen.fill((0, 0, 0))
-        font = pygame.font.SysFont("PFStardust", 40, True)
-        text = font.render("Round 2", False, (255,255,255))
-        screen.blit(text,(50,50))
+        screen.blit(Round2_start, (0,0))
         
         time_now = pygame.time.get_ticks()
         if time_now - time_last > 500:
@@ -259,20 +262,15 @@ while 1:
 
         for animal in animals:
             if puang.hit_by(animal):
-                font = pygame.font.SysFont("PFStardust", 35, True)
                 screen.blit(Round2_OVER, (0,0))
-                txt = font.render("Back to the Game", True, (255,255,255))
-                txt_x = 10
-                txt_y = 528
-                buttonrect_end= pygame.Rect((txt_x, txt_y), txt.get_size())
-                pygame.draw.rect(screen, (0,0,0), buttonrect_end)
-                screen.blit(txt, (txt_x, txt_y))
+                buttonrect = pygame.Rect(71,565,263,57)
+                pygame.draw.rect(screen, (0,0,0), buttonrect, 1)
            
                 while 1:
                     for event in pygame.event.get():
                         if event.type == QUIT:
                             sys.exit()
-                    if pygame.mouse.get_pressed()[0] and buttonrect_end.collidepoint(pygame.mouse.get_pos()):
+                    if pygame.mouse.get_pressed()[0] and buttonrect.collidepoint(pygame.mouse.get_pos()):
                         menu = "round2_start"
                         time_last = 0
                         time_now = 0
@@ -285,13 +283,13 @@ while 1:
     
     if time_now - time_last > 10000:    
         time_last = pygame.time.get_ticks()
+        last_spawn_time = 0
+        puang = Puang() 
+        animals.clear()
         menu = "round3_start"
 
     if menu == "round3_start":
-        screen.fill((0, 0, 0))
-        font = pygame.font.SysFont("PFStardust", 40, True)
-        text = font.render("Round 3", False, (255,255,255))
-        screen.blit(text,(50,50))
+        screen.blit(Round2_start, (0,0))
         
         time_now = pygame.time.get_ticks()
         if time_now - time_last > 500:
@@ -322,24 +320,19 @@ while 1:
 
         for people in peoples:
             if puang.hit_by(people):
-                font = pygame.font.SysFont("PFStardust", 35, True)
                 screen.blit(Round3_OVER, (0,0))
-                txt = font.render("Back to the Game", True, (255,255,255))
-                txt_x = 10
-                txt_y = 528
-                buttonrect_end= pygame.Rect((txt_x, txt_y), txt.get_size())
-                pygame.draw.rect(screen, (0,0,0), buttonrect_end)
-                screen.blit(txt, (txt_x, txt_y))
+                buttonrect = pygame.Rect(71,565,263,57)
+                pygame.draw.rect(screen, (0,0,0), buttonrect, 1)
            
                 while 1:
                     for event in pygame.event.get():
                         if event.type == QUIT:
                             sys.exit()
-                    if pygame.mouse.get_pressed()[0] and buttonrect_end.collidepoint(pygame.mouse.get_pos()):
+                    if pygame.mouse.get_pressed()[0] and buttonrect.collidepoint(pygame.mouse.get_pos()):
                         menu = "round3_start"
                         time_last = 0
                         time_now = 0
-                        last_ginkgo_spawn_time = 0
+                        last_spawn_time = 0
                         puang = Puang() 
                         peoples.clear()
                         break
@@ -347,32 +340,23 @@ while 1:
     
     if time_now - time_last > 10000:    
         time_last = pygame.time.get_ticks()
+        clock.tick(60) 
+        last_spawn_time = 0
+        puang = Puang() 
+        peoples.clear()
         menu = "outro"
 
     if menu == "outro":
-        screen.fill((0, 0, 0))
-        font = pygame.font.SysFont("PFStardust", 40, True)
-        text = font.render("Success!", False, (255,255,255))
-        screen.blit(text,(50,50))
-
-        txt = font.render("Back to main", True, (255,255,255))
-        txt_x = 10
-        txt_y = 528
-        buttonrect = pygame.Rect((txt_x, txt_y), txt.get_size())
-        pygame.draw.rect(screen, (0,0,0), buttonrect)
-        screen.blit(txt, (txt_x, txt_y))
+        screen.blit(ending,(0,0)) 
+        buttonrect = pygame.Rect(71,510,263,57)
+        pygame.draw.rect(screen, (0,0,0), buttonrect, 1)
         while 1:
             for event in pygame.event.get():
                 if event.type == QUIT:
                     sys.exit()
-            if pygame.mouse.get_pressed()[0] and buttonrect_end.collidepoint(pygame.mouse.get_pos()):
+            if pygame.mouse.get_pressed()[0] and buttonrect.collidepoint(pygame.mouse.get_pos()):
                 menu = "main"
-                time_last = 0
-                time_now = 0
-                last_ginkgo_spawn_time = 0
-                puang = Puang() 
-                peoples.clear()
-                break
+                
             pygame.display.update()
 
     
