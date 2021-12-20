@@ -1,3 +1,18 @@
+"""
+The following sets forth attribution notices for third party software that may be contained in this program.
+Please refer to the LICENSE.txt file in this program folder for each license copy.
+
+Python
+https://www.python.org/
+Copyright (c) 2001, 2002, 2003, 2004, 2005, 2006 Python Software Foundation; All Rights Reserved
+PSF-2.0 License
+
+Pygame
+https://www.pygame.org/
+Copyright (c) 2021 Pygame Community
+LGPLv3 License
+"""
+
 ### 모듈 불러오기 ###
 import pygame, sys, random, time
 from pygame.locals import *
@@ -199,7 +214,7 @@ while 1:
         puang.move()
         puang.draw()
         
-        i = 0
+        i = 0   
         while i < len(ginkgos):
             ginkgos[i].move()
             ginkgos[i].draw()
@@ -310,7 +325,7 @@ while 1:
         start = time.time()
         time_now = pygame.time.get_ticks()
         ticks = start - end
-        if time.time() - last_spawn_time > 0.8:       # 장애물 생성 속도 조절(0.8초마다 생성)
+        if time.time() - last_spawn_time > 1:       # 난이도 조절을 위해 장애물 생성 속도 조절(1초마다 생성)
             peoples.append(People())
             last_spawn_time = time.time()
 
