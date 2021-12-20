@@ -1,0 +1,186 @@
+### 모듈 불러오기 ###
+import pygame, sys, random, time
+from pygame.locals import *
+
+### 프로그램 기본 세팅 ###
+pygame.init()
+pygame.display.set_caption("통학러 푸앙이")
+screen = pygame.display.set_mode((405, 650))   # 스크린 사이즈 405*650 (대략 10:16 비율)
+clock = pygame.time.Clock()
+
+#GAME_OVER = pygame.load("images/gameover.png").convert() #게임오버 이미지
+
+### 이미지, 사운드 파일, 폰트 세팅 ###
+animal_image = pygame.image.load("images/animal.png").convert() #동물 이미지
+animal_image = pygame.transfrom.scale(animal_image, (50, 50))
+
+#동물이미지 추가예정!
+
+puang_image = pygame.image.load("images/puang.png") #푸앙 이미지
+puang_image = pygame.transfrom.scale(puang_image, (95, 105))
+
+#라운드2 시작
+Round2_start = pygame.image.load("images/rough_images/round2_start.png")
+Round2_start = pygame.transform.scale(Round2_start, (405, 650))
+
+#라운드2 이미지
+Round2_background = pygame.image.load("images/rough_images/round2_background.png")
+Round2_background = pygame.transform.scale(Round2_background, (405, 650))
+
+#라운드2 게임오버
+Round2_OVER = pygame.image.load("images/rough_images/round2_end.png")
+Round2_OVER = pygame.transform.scale(Round2_OVER, (405, 650))
+
+#main
+main = pygame.image.load("images/rough_images/main.png")
+main = pygame.transform.scale(main, (405, 650))
+
+font = pygame.font.Font(None, 50)
+
+#여러가지 동물 이미지 추가 예정
+
+### 변수 세팅 : 변수 선언 ###
+time_last = 0
+time_now = 0
+last_animal_spawn_time = 0
+
+### 클래스 세팅 : 클래스 생성 ###
+
+#여러가지 동물 클래스 추가 예정
+
+class Animal:
+    def __init__(self):
+        self.x = random.randint(20,630)  #동물 픽셀 20
+        self.y = -60
+        self.dy = random.randint(1,2)   # y방향 가속 설정
+        self.dx = random.choice((-1,1))*self.dy # x방향 가속 설정
+
+    def move(self):
+        self.y += self.dx
+        self.dy += 0.1
+        self.y += self.dy
+        
+    def draw(self):
+        screen.blit(animal_image,(self.x,self.y))
+
+    def bounce(self):
+        if delf.x < 0 or self.x > 405:
+            self.dx *= -1
+
+    def off_screen(self):
+        return self.y > 650
+
+animal = Animal()
+
+class puang:
+    def __init__(self):
+        self.x = 155
+        self.y = 540
+        
+    def move(self):
+        if pressed_keys[K_LEFT] and self.x > 0:
+            self.x -= 5
+        if pressed_keys[K_RIGHT] and self.x < 310:
+            self.x += 5
+            
+    def draw(self):
+        screen.blit(puang_image,(self.x, 540))
+
+    def hit_by(self,animal):
+        return pygame.Rect((self.x, self.y),(95, 105)).collidepoint(animal.x, animal.y)
+
+
+
+### 인스턴스 세팅 : 인스턴스 생성 ###
+animals = []
+puang = Puang()
+
+### 게임 메인 루프 ###
+while 1:
+    clock.tick(60)                      # 스크린 프레임 레이트 설정 (60fps)
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            sys.exit()                  # QUIT 버튼 클릭 여부 감지
+    pressed_keys = pygame.key.get_pressed()
+
+    if menu == "main":
+        screen.blit(main, (0,0))
+        txt = font.render("Start Game", True, (255,255,255))
+        txt_x = 120
+        txt_y = 526
+        buttonrect = pygame.Rect((txt_x, txt_y), txt.get_size())
+        pygame.draw.rect(screen, (255,0,0), buttonrect)
+        screen.blit(txt, (txt_x, txt_y))
+        
+        if pygame.mouse.get_pressed()[0] and buttonrect.collidepoint(pygame.mouse.get_pos()):
+            time_last = pygame.time.get_ticks()
+            menu = "game_start"
+
+    if menu == "game_start":
+        time_now = pygame.time.get_ticks()
+        screen.blit(game_start,(0,0))
+        
+        if time_now - time_last > 500:
+            time_last = pygame.time.get_ticks()
+            menu = "round2_start"
+
+    if menu == "round1_start":
+        time_now = pygame.time.get_ticks()
+        screen.blit(Round1_start,(0,0))
+        
+        if time_now - time_last > 500:
+            time_last = pygame.time.get_ticks()
+            menu = "round1_game"
+
+    if menu == "round1_game":
+        if time.time() - last_animal_spawn_time > 0.5:
+            animals.append(Animal())
+            last_animal_spawn_time = time.time()
+
+        screen.fill((255, 255, 255))
+        screen.blit(Round2_background, (0,0))
+            
+        puang.move()
+        puang.draw()
+
+        i = 0
+        while i < len(animals):
+            animals[i].move()
+            animals[i].bounce()
+            animals[i].draw()
+
+            if animals[i].off_screen():
+                del animals[i]
+                i -= 1
+            i += 1
+
+        for animal in animals:
+            if puang.hit_by(animal):
+                screen.blit(Round1_OVER, (0,0))
+                txt = font.render("Back to the Game", True, (255,255,255))
+                txt_x = 55
+                txt_y = 528
+                buttonrect_end= pygame.Rect((txt_x, txt_y), txt.get_size())
+                pygame.draw.rect(screen, (255,0,0), buttonrect_end)
+                screen.blit(txt, (txt_x, txt_y))
+                
+                while 1:
+                    for event in pygame.event.get():
+                        if event.type == pygame.QUIT:
+                            sys.exit()
+                    if pygame.mouse.get_pressed()[0] and buttonrect_end.collidepoint(pygame.mouse.get_pos()):
+                        menu = "round1_start"
+                        time_last = 0
+                        time_now = 0
+                        last_ginkgo_spawn_time = 0
+                        puang = Puang() 
+                        ginkgos.clear()
+                        break
+                    
+                    pygame.display.update()
+
+        pygame.draw.rect(screen, (234,234,234), [300, 0, 100, 60])
+        screen.blit(font.render(str(int((pygame.time.get_ticks())/1000)), True, (0, 0, 0)), (325, 15))
+
+
+    pygame.display.update()             # 스크린 업데이트(게임 루프 제일 하단에 *반드시* 위치해야 함)

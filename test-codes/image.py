@@ -13,12 +13,3 @@ Round3_background = pygame.image.load("images/round3_background.png")
 Round1_OVER = pygame.image.load("images/round1_end.png")
 Round2_OVER = pygame.image.load("images/round2_end.png")
 Round3_OVER = pygame.image.load("images/round3_end.png")
-
-
-# 장애물 - round 1
-
-
-# 장애물 - round 2
-
-
-# 장애물 - round 3
