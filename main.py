@@ -313,7 +313,7 @@ while 1:
         menu = "round3_start"
 
     if menu == "round3_start":
-        screen.blit(Round2_start, (0,0))
+        screen.blit(Round3_start, (0,0))
         
         time_now = pygame.time.get_ticks()
         if time_now - time_last > 500:
