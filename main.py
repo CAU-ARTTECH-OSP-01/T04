@@ -35,7 +35,7 @@ animal_images = ['animal-1.png', 'animal-2.png', 'animal-3.png', 'animal-4.png',
 people_images = ['people-1.png', 'people-2.png', 'people-3.png', 'people-4.png', 'people-5.png', \
                  'people-6.png', 'people-7.png', 'people-8.png', 'people-9.png', 'people-10.png', 'people-11.png', 'people-12.png']
 
-font = pygame.font.Font(None, 50)
+font = pygame.font.SysFont(None, 50, True, False)
 
 
 ### 변수 세팅 : 변수 선언 ###
@@ -180,16 +180,20 @@ while 1:
         time_now = pygame.time.get_ticks()
         if time_now - time_last > 500:
             time_last = pygame.time.get_ticks()
+            end = time.time()
             menu = "round1_game"
 
     if menu == "round1_game":
+        start = time.time()
         time_now = pygame.time.get_ticks()
+        ticks = start - end
         if time.time() - last_spawn_time > 0.5:       # 1라운드 장애물 생성 속도 조절(0.5초마다 생성)
             ginkgos.append(Ginkgo())
             last_spawn_time = time.time()
 
         screen.fill((255, 255, 255))
         screen.blit(Round1_background, (0,0))
+        screen.blit(font.render(str(10 - int(ticks)), True, (255, 255, 255)), (20, 20))
         
         puang.move()
         puang.draw()
@@ -237,16 +241,20 @@ while 1:
         time_now = pygame.time.get_ticks()
         if time_now - time_last > 500:
             time_last = pygame.time.get_ticks()
+            end = time.time()
             menu = "round2_game"
 
     if menu == "round2_game":
+        start = time.time()
         time_now = pygame.time.get_ticks()
+        ticks = start - end
         if time.time() - last_spawn_time > 0.8:       # 장애물 생성 속도 조절(0.8초마다 생성)
             animals.append(Animal())
             last_spawn_time = time.time()
 
         screen.fill((255, 255, 255))
         screen.blit(Round2_background, (0,0))
+        screen.blit(font.render(str(10 - int(ticks)), True, (0, 0, 0)), (20, 20))
         
         puang.move()
         puang.draw()
@@ -295,16 +303,20 @@ while 1:
         time_now = pygame.time.get_ticks()
         if time_now - time_last > 500:
             time_last = pygame.time.get_ticks()
+            end = time.time()
             menu = "round3_game"
 
     if menu == "round3_game":
+        start = time.time()
         time_now = pygame.time.get_ticks()
+        ticks = start - end
         if time.time() - last_spawn_time > 0.8:       # 장애물 생성 속도 조절(0.8초마다 생성)
             peoples.append(People())
             last_spawn_time = time.time()
 
         screen.fill((255, 255, 255))
         screen.blit(Round3_background, (0,0))
+        screen.blit(font.render(str(10 - int(ticks)), True, (70, 70, 70)), (20, 20))
         
         puang.move()
         puang.draw()
