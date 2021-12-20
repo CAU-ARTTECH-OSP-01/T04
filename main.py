@@ -36,6 +36,7 @@ people_images = ['people-1.png', 'people-2.png', 'people-3.png', 'people-4.png',
                  'people-6.png', 'people-7.png', 'people-8.png', 'people-9.png', 'people-10.png', 'people-11.png', 'people-12.png']
 
 font = pygame.font.SysFont(None, 50, True, False)
+sound = pygame.mixer.Sound("sound/sound_1.mp3")
 
 
 ### 변수 세팅 : 변수 선언 ###
@@ -157,6 +158,7 @@ while 1:
     pressed_keys = pygame.key.get_pressed()
     
     if menu == "main":
+        sound.play(-1)
         screen.fill((255, 255, 255))
         screen.blit(main, (0,0))
         buttonrect = pygame.Rect(230, 540, 150, 44)
@@ -176,7 +178,6 @@ while 1:
         
     if menu == "round1_start":
         screen.blit(Round1_start, (0,0))
-        
         time_now = pygame.time.get_ticks()
         if time_now - time_last > 500:
             time_last = pygame.time.get_ticks()
@@ -237,7 +238,6 @@ while 1:
 
     if menu == "round2_start":
         screen.blit(Round2_start, (0,0))
-        
         time_now = pygame.time.get_ticks()
         if time_now - time_last > 500:
             time_last = pygame.time.get_ticks()
@@ -360,6 +360,7 @@ while 1:
         menu = "outro"
 
     if menu == "outro":
+        sound.fadeout(500)
         screen.blit(ending,(0,0)) 
         buttonrect = pygame.Rect(71,510,263,57)
         pygame.draw.rect(screen, (0,0,0), buttonrect, 1)
